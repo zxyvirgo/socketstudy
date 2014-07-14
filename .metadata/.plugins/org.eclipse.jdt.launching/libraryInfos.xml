@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="D:\Dev\eclipse\jre" version="1.6.0_33">
+<bootpath>
+<entry path="D:\Dev\eclipse\jre\jre\lib\resources.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\rt.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\sunrsasign.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\jsse.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\jce.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\charsets.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\lib\modules\jdk.boot.jar"/>
+<entry path="D:\Dev\eclipse\jre\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="D:\Dev\eclipse\jre\jre\lib\ext"/>
+<entry path="C:\windows\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="D:\Dev\eclipse\jre\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>
