@@ -36,12 +36,7 @@ public class SocketClient {
             	如果没有contine，则作为第一次的发送数据进行发送，如果有那么
             	就是另一类数据的发送*/
             	byte[] output;
-            	if (result.indexOf("continue") == -1){
             	output ="010:1:ajhkokkll2011:1:sgjkljkl\n".getBytes();
-            	}
-            	else{
-            	output ="011:2:aj011:1:sgjkljsgjklj\n".getBytes();	
-            	}
             	dataOutputStream.write(output);
             	dataOutputStream.flush();
                 

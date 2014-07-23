@@ -28,6 +28,7 @@ public class Server extends ServerSocket {
         int length=0;
        char statecode;
         int templength = 0;
+        int j;
 
         public CreateServerThread(Socket s) throws IOException {
             client = s;
@@ -48,7 +49,7 @@ public class Server extends ServerSocket {
             	byte[] input =bufferedReader.readLine().getBytes();   
             	int totalength = input.length;
             	
-            	for (int j=0 ;j<totalength; j++){
+            	for (j=0 ;j<totalength; ){
             		
             	//拆分成多个包
             	
@@ -63,27 +64,35 @@ public class Server extends ServerSocket {
             	length = (number0-48)*100+(number1-48)*10+(number2-48);
             	System.out.println("the length is"+length);
             	   
-            	statecode = (char)input[j+5];
-            	
+            	statecode = (char)input[j+4];
             		switch(statecode){
             		
-            		case 49:{
+            		case '1':{
             		
 	                      //从距离包头开始的第7个字符起，才是内容 ，但是如何包头的长度
 	            	      //余下的数据不够，那么应该向客户端发送请求，让客户端继续输入数据
-	            		  if (length <=totalength-j-7){
+	            		 int leavingslength = totalength-j-7;
+            			  if (length <=leavingslength){
 	            		  byte[] content = new byte[length];  		
-	            	      for (int i=0; i<=length; i--){
-	                      	content[i] = input[7+i+j];                 
+	            	      for (int i=0; i<length; i++){
+	                      	content[i] = input[6+i+j];                 
 	                      }
 	            	      //取完以后，输出内容。
 	            	      System.out.println(new String(content));
-	            		  }else{
+	            	      
+	            		  }else{            			  
+	            			
 	            			  //如果还没发送完，说明还需要客户端继续发送数据，并记录下这次已经发送的长度
-	            			  dataOutputStream.writeBytes("continue");         			  
-	            			  templength = totalength -j -7;
+	            			  templength = totalength -j -6;
+	            			  //发现要获取新的串。需要归0，并且记录下当前的数据          			  
+	            			  byte[] content = new byte[templength];  		
+		            	      for (int i=0; i<templength; i++){
+		                      	content[i] = input[6+i+j];                 
+		                      }
+		            	      //取完以后，输出内容。
+		            	      System.out.println(new String(content));
 	            		  }
-	            		  
+            			  j = j+length+6; 
 	            	      break;
             		}
             		case '2':{
@@ -96,10 +105,11 @@ public class Server extends ServerSocket {
                               }
                     	      //取完以后，输出内容。
                     	      System.out.println(new String(content));
+                    	      j = j+length+6; //下一个串的起点
             			  }else{
                     			  //如果还没发送完，说明还需要客户端继续发送数据，并记录下这次已经发送的长度
-            				  dataOutputStream.writeBytes("continue");         			  
                     		  templength = totalength -j -7;
+                    		  //回归到起点，并且记录下之前获取的串
                     	  }
                     		  
                     	      break;
@@ -107,16 +117,16 @@ public class Server extends ServerSocket {
             		}
             		default:{
             			//读完第一个包，就开始下一个包
-            			j = j+length+7;
-            			System.out.println("j is"+j);
+            			
             			
             		}      		
             		}//switch
             		
-       	
+            		
             	}//end if 保证头上的三个字节都是0-9的数字，如果发送的包有误就关闭连接
             	
             	}//for循环，解析到获取的全部字节流
+            	j=0;
             	dataOutputStream.writeBytes("bye");
                 //读取结束以后，关闭连接
                 System.out.println("Client(" + getName() + ") exit!");
